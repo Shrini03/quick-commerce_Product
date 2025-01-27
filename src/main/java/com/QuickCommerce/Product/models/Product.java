@@ -25,4 +25,13 @@ public class Product extends Base{
     Restaurant restaurant;
     @OneToMany(mappedBy = "product")
     List<ProductReview> productReviewList;
+
+    public Product(String name, String description, Double price, int stock, String imgURL) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.stock = stock;
+        this.imgURL = imgURL;
+    }
+
 }
