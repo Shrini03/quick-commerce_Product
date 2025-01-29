@@ -3,7 +3,6 @@ package com.QuickCommerce.Product.controllers;
 import com.QuickCommerce.Product.DTO.RestaurantDTO;
 import com.QuickCommerce.Product.exceptions.InvalidArgException;
 import com.QuickCommerce.Product.exceptions.NotFoundException;
-import com.QuickCommerce.Product.models.Restaurant;
 import com.QuickCommerce.Product.services.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

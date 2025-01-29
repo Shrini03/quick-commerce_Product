@@ -11,6 +11,8 @@ import com.QuickCommerce.Product.repos.RestaurantRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,12 +28,48 @@ public class ProductService {
         return getProductDTO(productRepo.save(product));
     }
 
+    public List<ProductDTO> addProductList(List<ProductDTO> productDTOList) throws InvalidArgException {
+        List<Product> productList = new ArrayList<>();
+        for(ProductDTO productDTO: productDTOList){
+            productSanityCheck(productDTO);
+            productList.add(getProduct(productDTO));
+        }
+        List<Product> outProductList = productRepo.saveAll(productList);
+        List<ProductDTO> outProductDTOList = new ArrayList<>();
+        for(Product product: outProductList){
+            outProductDTOList.add(getProductDTO(product));
+        }
+        return outProductDTOList;
+    }
+
     public ProductDTO getProductById(Long id)throws NotFoundException {
         Optional<Product> productOptional = productRepo.findById(id);
         if(productOptional.isEmpty()){
             throw new NotFoundException("Product not found");
         }
         return getProductDTO(productOptional.get());
+    }
+
+    public List<ProductDTO> getProductByRestaurantId(Long Id)throws InvalidArgException{
+        Optional<Restaurant > restaurantOptional = restaurantRepo.findById(Id);
+        if(restaurantOptional.isEmpty()){
+            throw new InvalidArgException("Restaurant not found");
+        }
+        List<Product> productList = productRepo.findProductByRestaurant(restaurantOptional.get());
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        for(Product product: productList){
+            productDTOList.add(getProductDTO(product));
+        }
+        return productDTOList;
+    }
+
+    public List<ProductDTO> getAllProducts(){
+        List<Product> productList = productRepo.findAll();
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        for(Product product: productList){
+            productDTOList.add(getProductDTO(product));
+        }
+        return productDTOList;
     }
 
     public String deleteProductById(Long id) throws NotFoundException{
@@ -43,6 +81,8 @@ public class ProductService {
         return "Product with id " + id + " deleted";
     }
 
+
+/*-------------------------------Helper Functions------------------------------------------------*/
     public Product getProduct(ProductDTO productDTO) throws InvalidArgException {
 
         Product product =  new Product(productDTO.getName(),

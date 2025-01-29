@@ -22,16 +22,22 @@ public class ProductController {
 
     @PostMapping("/addList")
     public List<ProductDTO> addProductList(@RequestBody List<ProductDTO> productDTOList) throws InvalidArgException{
-        List<ProductDTO> responseDTO = new ArrayList<>();
-        for(ProductDTO productDTO: productDTOList){
-            responseDTO.add(productService.addProduct(productDTO));
-        }
-        return responseDTO;
+        return productService.addProductList(productDTOList);
+    }
+
+    @GetMapping()
+    public List<ProductDTO> getAllProducts(){
+        return productService.getAllProducts();
     }
 
     @GetMapping("/{id}")
     public ProductDTO getProductById(@PathVariable Long id) throws NotFoundException {
         return productService.getProductById(id);
+    }
+
+    @GetMapping("/restaurant/{id}")
+    public List<ProductDTO> getAllProductsByRestaurant(@PathVariable Long id) throws InvalidArgException{
+        return productService.getProductByRestaurantId(id);
     }
 
     @DeleteMapping("/{id}")
