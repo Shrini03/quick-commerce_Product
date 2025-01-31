@@ -18,4 +18,19 @@ public class ProductDTO {
     String imgURL;
     int categoryID;
     Long restaurantID;
+
+    @Override
+    public boolean equals(Object other){
+        if(other instanceof ProductDTO){
+            ProductDTO otherProduct = (ProductDTO) other;
+            return this.name.equals(otherProduct.name) &&
+                    this.description.equals(otherProduct.description) &&
+                    this.price == otherProduct.price &&
+                    this.stock == otherProduct.stock &&
+                    this.imgURL.equals(otherProduct.imgURL) &&
+                    this.categoryID == otherProduct.categoryID &&
+                    this.restaurantID == otherProduct.restaurantID;
+        }
+        return false;
+    }
 }
