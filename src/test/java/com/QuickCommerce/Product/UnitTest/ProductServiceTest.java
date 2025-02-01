@@ -1,4 +1,4 @@
-package com.QuickCommerce.Product.ProductService;
+package com.QuickCommerce.Product.UnitTest;
 
 import com.QuickCommerce.Product.DTO.ProductDTO;
 import com.QuickCommerce.Product.exceptions.InvalidArgException;
@@ -11,26 +11,23 @@ import com.QuickCommerce.Product.repos.RestaurantRepo;
 import com.QuickCommerce.Product.services.ProductService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
-
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
-
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
 
-    @Autowired
+    @InjectMocks // Injecting service
     ProductService productService;
-    @MockitoBean
+    @Mock // Mocking repository
     ProductRepo productRepo;
-    @MockitoBean
+    @Mock // Mocking repository
     RestaurantRepo resturantRepo;
 
     Restaurant restaurant = new Restaurant(
